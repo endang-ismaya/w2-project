@@ -1,0 +1,15 @@
+{
+  "name": "w2-project",
+  "version": "1.0.0",
+  "description": "andaglos w2-project javascript",
+  "main": "absensi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node absensi.js"
+  },
+  "author": "Endang Ismaya",
+  "license": "ISC",
+  "devDependencies": {
+    "jshint": "^2.9.6"
+  }
+}
