@@ -46,27 +46,27 @@ const SISWA_KELAS_1C = [
     ['1C003', 'Ali Husain', '1C']
 ];
 const KELAS = ['1A', '1B', '1C'];
-const ABSENSI = ['A', 'I', 'S'];
+const ABSENSI = ['H', 'S', 'I', 'A'];
 
 // initialiasi daftar absen siswa
 var absensi_siswa = [
-    [ 'Senin, 05-11-2018', '1A001', 'Abu Bakar', '1A', 'A'],
-    [ 'Senin, 05-11-2018', '1A002', 'Umar', '1A', 'A'],
-    [ 'Senin, 05-11-2018', '1A003', 'Utsman', '1A', 'A'],
-    [ 'Senin, 05-11-2018', '1B001', 'Masruq', '1A', 'A'],
+    [ 'Senin, 05-11-2018', '1A001', 'Abu Bakar', '1A', 'H'],
+    [ 'Senin, 05-11-2018', '1A002', 'Umar', '1A', 'H'],
+    [ 'Senin, 05-11-2018', '1A003', 'Utsman', '1A', 'H'],
+    [ 'Senin, 05-11-2018', '1B001', 'Masruq', '1A', 'H'],
     [ 'Senin, 05-11-2018', '1B002', 'Ubaidah', '1A', 'I'],
     [ 'Senin, 05-11-2018', '1B003', 'AlQomah', '1A', 'S'],
-    [ 'Senin, 05-11-2018', '1C001', 'Muhammad Sirin', '1A', 'A'],
+    [ 'Senin, 05-11-2018', '1C001', 'Muhammad Sirin', '1A', 'H'],
     [ 'Senin, 05-11-2018', '1C002', 'Ibrahim', '1A', 'S'],
     [ 'Senin, 05-11-2018', '1C003', 'Ali Husain', '1A', 'A'],
     [ 'Selasa, 06-11-2018', '1A001', 'Abu Bakar', '1A', 'I'],
-    [ 'Selasa, 06-11-2018', '1A002', 'Umar', '1A', 'A'],
-    [ 'Selasa, 06-11-2018', '1A003', 'Utsman', '1A', 'S'],
-    [ 'Selasa, 06-11-2018', '1B001', 'Masruq', '1A', 'A'],
-    [ 'Selasa, 06-11-2018', '1B002', 'Ubaidah', '1A', 'A'],
+    [ 'Selasa, 06-11-2018', '1A002', 'Umar', '1A', 'H'],
+    [ 'Selasa, 06-11-2018', '1A003', 'Utsman', '1A', 'H'],
+    [ 'Selasa, 06-11-2018', '1B001', 'Masruq', '1A', 'H'],
+    [ 'Selasa, 06-11-2018', '1B002', 'Ubaidah', '1A', 'H'],
     [ 'Selasa, 06-11-2018', '1B003', 'AlQomah', '1A', 'I'],
     [ 'Selasa, 06-11-2018', '1C001', 'Muhammad Sirin', '1A', 'A'],
-    [ 'Selasa, 06-11-2018', '1C002', 'Ibrahim', '1A', 'A'],
+    [ 'Selasa, 06-11-2018', '1C002', 'Ibrahim', '1A', 'H'],
     [ 'Selasa, 06-11-2018', '1C003', 'Ali Husain', '1A', 'S']
 ];
 
@@ -75,6 +75,7 @@ console.log(absensi_siswa);
 
 // Function untuk mendapatkan data lengkap siswa dari no_induk
 // Mencari no_induk berurutan dari data SISWA_KELAS_1A, 1B dan 1C
+// Mengembalikan nilai Array
 function getDetailSiswa(noInduk) {
 
     for (let i = 0; i < SISWA_KELAS_1A.length; i++) {
@@ -121,7 +122,7 @@ function addAbsensiSiswa(tanggal, noInduk, absen) {
 
 // Function untuk menghapus absensi siswa
 // Berdasarkan Hari, Tanggal dan no-induk siswa
-// Menggunakan splice
+// Menggunakan: splice
 function deleteAbsensiSiswa(tanggal, noInduk) {
 
     var isBerhasilDiHapus = false;
@@ -146,7 +147,7 @@ function deleteAbsensiSiswa(tanggal, noInduk) {
 
 // Function untuk menghapus absensi siswa
 // Berdasarkan input terakhir
-// Menggunakan pop
+// Menggunakan: pop
 function deleteLastAbsensiSiswa() {
 
     if (absensi_siswa.length > 0) {
@@ -159,7 +160,7 @@ function deleteLastAbsensiSiswa() {
 
 // Function untuk menghapus absensi siswa
 // Berdasarkan input pertama
-// Menggunakan shift
+// Menggunakan: shift
 function deleteFirstAbsensiSiswa() {
 
     if (absensi_siswa.length > 0) {
@@ -169,6 +170,65 @@ function deleteFirstAbsensiSiswa() {
         console.log('\n~Tidak Ada yang terhapus!~.');
     }
 }
+
+// Function Absensi
+// Return: Akronim Absensi
+function getDetailAbsensi(kodeAbsensi) {
+    switch (kodeAbsensi) {
+        case 'S':
+            return 'Sakit';
+        case 'I':
+            return 'Izin';
+        case 'A':
+            return 'Alpa';
+        default:
+            return 'Hadir';
+    }
+}
+
+// Function untuk menampilkan data absensi siswa
+// Berdasarkan input Hari, Tanggal dan no-induk siswa
+// Menggunakan: split, switch
+// Return: Function dari type menampilkan siswa berdasarkan type tampilan
+function showAbsensiSiswa(type) {
+
+    switch(type) {
+        case 'single':
+            return function(tanggal, noInduk) {
+                var result = '~Data tidak ditemukan!~';
+
+                for (let i = 0; i < absensi_siswa.length; i++) {
+                    const dataSiswa = absensi_siswa[i];
+                    const hariTanggal = dataSiswa[0];
+                    const noIndukSiswa = dataSiswa[1];
+                    const namaLengkap = dataSiswa[2];
+                    const kelas = dataSiswa[3];
+                    const absensi = dataSiswa[4];
+
+                    if (tanggal === hariTanggal && noInduk === noIndukSiswa) {
+                        let hari = hariTanggal.split(',')[0];
+                        let tanggalAbsen = hariTanggal.split(',')[1].trim();
+
+                        result = "Hari: " + hari + "\n";
+                        result += "Tanggal: " + tanggalAbsen + "\n";
+                        result += "No-Induk: " + noIndukSiswa + "\n";
+                        result += "Nama: " + namaLengkap + "\n";
+                        result += "Kelas: " + kelas + "\n";
+                        result += "Absensi: " + getDetailAbsensi(absensi) + "\n";
+                    }
+                }
+
+                return result;
+            };
+
+        default:
+            break;
+    }
+}
+
+// Function untuk mengedit data absensi siswa
+// Berdasarkan Hari, Tanggal dan no-induk siswa
+
 
 /*
     Test Tambah data Absensi
@@ -203,3 +263,11 @@ console.log(absensi_siswa);
 // test delete data absensi pertama
 deleteFirstAbsensiSiswa();
 console.log(absensi_siswa);
+
+// test tampilkan data siswa
+var singleShow = showAbsensiSiswa('single');
+var dataSingleShow = singleShow('Selasa, 06-11-2018', '1A001'); // data valid
+console.log(dataSingleShow);
+
+var dataSingleShow = singleShow('Selasa, 06-11-2018', '1K001'); // data invalid
+console.log(dataSingleShow);
