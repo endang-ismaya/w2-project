@@ -191,7 +191,7 @@ function getDetailAbsensi(kodeAbsensi) {
 
 // Function untuk menampilkan data absensi siswa
 // Berdasarkan input Hari, Tanggal dan no-induk siswa
-// Menggunakan: split, switch, join
+// Menggunakan: split, switch, join, slice, unshift
 // Return: Function dari type menampilkan siswa berdasarkan type tampilan
 function showAbsensiSiswa(type) {
 
@@ -241,8 +241,64 @@ function showAbsensiSiswa(type) {
             };
 
         default:
+            return function(inputArray) {
+                var result = '-'.repeat(72) + '\n';
+                var arrayResult = inputArray.slice(0);
+
+                var header = ['Hari, Tanggal', 'No Induk', 'Nama Siswa', 'Kelas', 'Absensi'];
+                arrayResult.unshift(header); // Menambahkan header pada array
+
+                for (let i = 0; i < arrayResult.length; i++) {
+                    const dataSiswa = arrayResult[i];
+                    const hariTanggal = dataSiswa[0];
+                    const noIndukSiswa = dataSiswa[1];
+                    const namaLengkap = dataSiswa[2];
+                    const kelas = dataSiswa[3];
+                    const absensi = dataSiswa[4];
+
+                    result += '|' + hariTanggal + tableSpaces(hariTanggal, 0) + noIndukSiswa +
+                    tableSpaces(noIndukSiswa, 1) + namaLengkap + tableSpaces(namaLengkap, 0) +
+                    kelas + tableSpaces(kelas, 2) + absensi +  tableSpaces(absensi, 3) + '\n';
+
+                    if (i === 0 || i === arrayResult.length - 1) {
+                        result += '-'.repeat(72) + '\n';
+                    }
+                }
+
+                return result;
+            };
+    }
+}
+
+// Function untuk merapihkan spasi
+// Untuk tampilan table
+function tableSpaces(strInput, iSpaces) {
+
+    let maxSpaces = 0;
+    switch (iSpaces) {
+        case 0:
+            maxSpaces = 20;
+            break;
+        case 1:
+            maxSpaces = 10;
+            break;
+        case 2:
+            maxSpaces = 7;
+            break;
+        case 3:
+            maxSpaces = 9;
+            break;
+        default:
+            maxSpaces = 20;
             break;
     }
+
+
+    let i = strInput.length;
+    i = maxSpaces - i;
+
+    let spaces = ' '.repeat(i);
+    return spaces + '|';
 }
 
 // Function untuk mengedit data absensi siswa
@@ -331,6 +387,8 @@ console.log(absensi_siswa);
 console.log('\n'); // for indentation
 
 // test tampilkan data siswa
+// dengan single Function
+// dan single-join Function
 var singleShow = showAbsensiSiswa('single');
 var dataSingle = singleShow('Selasa, 06-11-2018', '1A001'); // data valid
 console.log('#------------------------'); // for title
@@ -362,3 +420,9 @@ console.log('# Update Absensi'); // for title
 console.log('#--------------------'); // for title
 var updateSiswa = updateAbsensiSiswa('Senin, 05-11-2018', '1B001', 'S');
 console.log(updateSiswa);
+
+// tampilkan data siswa keseluruhan
+// dnegan defaul function
+var DataShow = showAbsensiSiswa();
+var dataAll = DataShow(absensi_siswa);
+console.log(dataAll);
