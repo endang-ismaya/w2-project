@@ -10,6 +10,7 @@
   "author": "Endang Ismaya",
   "license": "ISC",
   "devDependencies": {
-    "jshint": "^2.9.6"
+    "jshint": "^2.9.6",
+    "lodash": ">=4.17.13"
   }
 }
